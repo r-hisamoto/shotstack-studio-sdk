@@ -1,0 +1,3 @@
+[build]
+  command = "npm run build && cp demo.html dist/index.html && cp -r public/* dist/"
+  publish = "dist"

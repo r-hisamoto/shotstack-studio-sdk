@@ -28,8 +28,9 @@
 		"url": "https://github.com/shotstack/shotstack-studio-sdk"
 	},
 	"scripts": {
-		"build": "vite build && tsc --emitDeclarationOnly",
-		"prepublishOnly": "npm run build"
+		"build": "vite build && tsc --emitDeclarationOnly && cp demo.html dist/index.html && cp -r public/* dist/",
+		"prepublishOnly": "npm run build",
+		"dev": "vite"
 	},
 	"peerDependencies": {
 		"@ffmpeg/ffmpeg": "^0.12.15"
