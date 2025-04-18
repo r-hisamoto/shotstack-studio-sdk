@@ -657,8 +657,9 @@
 			// Initialize the Shotstack Studio SDK
 			document.addEventListener('DOMContentLoaded', function() {
 				try {
+					// The SDK documentation indicates we should use the element ID without '#'
 					window.shotstack.create('studio', template, {
-						target: 'studio-editor',
+						target: document.getElementById('studio-editor'),
 						owner: 'oknugu1pfd',
 						interactive: true,
 						timeline: true,
