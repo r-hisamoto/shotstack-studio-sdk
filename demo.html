@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/assets/images/typescript.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Shotstack Studio SDK Demo</title>
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			}
+			.c-shotstack-studio {
+				width: 100%;
+				height: 100vh;
+			}
+			.controls-info {
+				position: fixed;
+				bottom: 10px;
+				left: 10px;
+				background: rgba(0, 0, 0, 0.7);
+				color: white;
+				padding: 10px;
+				border-radius: 5px;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div data-shotstack-studio class="c-shotstack-studio"></div>
+		<div class="controls-info">
+			<p>Keyboard Controls:</p>
+			<ul>
+				<li>Space: Play/Pause</li>
+				<li>J: Stop</li>
+				<li>K: Pause</li>
+				<li>L: Play</li>
+				<li>Left/Right Arrow: Seek</li>
+				<li>Shift+Left/Right: Seek faster</li>
+				<li>Comma/Period: Step frame by frame</li>
+			</ul>
+		</div>
+
+		<script type="module">
+			import { Edit, Canvas, Controls } from './shotstack-studio.es.js';
+
+			async function main() {
+				try {
+					// 1. Retrieve an edit from a template
+					const templateUrl = "https://shotstack-assets.s3.amazonaws.com/templates/hello-world/hello.json";
+					const response = await fetch(templateUrl);
+					const template = await response.json();
+
+					// 2. Initialize the edit with dimensions and background color
+					const edit = new Edit(template.output.size, template.timeline.background);
+					await edit.load();
+
+					// 3. Create a canvas to display the edit
+					const canvas = new Canvas(template.output.size, edit);
+					await canvas.load(); // Renders to [data-shotstack-studio] element
+
+					// 4. Load the template
+					await edit.loadEdit(template);
+
+					// 5. Add keyboard controls
+					const controls = new Controls(edit);
+					await controls.load();
+
+					console.log("Demo loaded successfully!");
+				} catch (error) {
+					console.error("Error in Shotstack Studio demo:", error);
+				}
+			}
+
+			main();
+		</script>
+	</body>
+</html>
