@@ -657,9 +657,14 @@
 			// Initialize the Shotstack Studio SDK
 			document.addEventListener('DOMContentLoaded', function() {
 				try {
+					// Make sure the target element exists before initializing
+					if (!document.getElementById('studio-editor')) {
+						console.error('Target element #studio-editor not found in DOM');
+						return;
+					}
+					
 					// The SDK documentation indicates we should use the element ID as a string
-					window.shotstack.create('studio', template, {
-						target: 'studio-editor',
+					window.shotstack.create('studio-editor', template, {
 						owner: 'oknugu1pfd',
 						interactive: true,
 						timeline: true,
